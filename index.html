@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head><meta charset="euc-jp"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Caliente MX</title>
+	<link href="https://fonts.googleapis.com" rel="preconnect" />
+	<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+	<link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro&amp;display=swap" rel="stylesheet" />
+	<style type="text/css">/* For desktop: */
+* {
+  box-sizing: border-box;
+}
+body {
+    margin: 0;
+}
+body * {font-family: 'Source Sans Pro', sans-serif;}
+.widget{
+    padding: 0 2vw;
+    height: fit-content;
+    overflow: hidden;
+    text-align: center;
+    
+}
+.widget: after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.sponsor{
+   width: 300px;
+   height: 150px;
+   float: left;
+}
+
+.frame{
+background: #f2f2f2;
+    height: 125px;
+    width: calc(100% - 300px);
+    float: left;
+    box-shadow: 0px 20px 10px 9px #0000002b;
+    /* column-count: 1; */
+   /* overflow: hidden;*/
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+}
+
+.carousel{
+    animation: carousel 40s ease-in-out infinite;
+}
+.carousel:hover {
+    animation-play-state: paused;
+  }
+/*
+@keyframes carousel {
+    0%, 20% {
+        transform: translateY(0);
+    }
+    25%, 45% {
+        transform: translateY(-125px)
+    }
+    50%, 70% {
+        transform: translateY(-250px)
+    }
+    75%, 95% {
+        transform: translateY(-375px)
+    }
+    100% {
+        transform: translateY(-500px)
+    }
+}*/
+.card {
+    width: 200px;
+    display: inline-flex;
+    place-content: center;
+    background: #ec2224;
+    height: 125px;
+    border-radius: 15px 15px 0 0;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 15px;
+}
+.date{
+    width: 200px;
+    height: 25px;
+    border-radius: 15px 15px 0 0;
+    font-weight: 600;
+}
+.match{
+    background-color: white;
+    width: 198px;
+    height: 115px;
+    display: inline-flex;
+    align-items: center;
+    border-top: 6px solid;
+    border-bottom: 6px solid;
+}
+.players{
+  width: 50%;
+  color: #939597;
+  font-weight: 700;
+}
+.momios{
+  width: 50%;
+  font-weight: 700;
+  }
+select#selectevento {
+    width: calc(100% - 300px);
+    text-align: center;
+    font-size: 18px;
+}  
+
+
+@media only screen and (max-width: 768px) {
+  /* For mobile phones: */
+  .sponsor{
+    width: 100%;
+    height: 50px;
+  }
+  .sponsor img{
+    height: 50px;
+  }
+  .frame{
+  width: 100%;
+  height: 100px;
+  }
+
+  .carousel{
+    animation: carouselM 40s ease-in-out infinite;
+  }
+ /* @keyframes carouselM {
+    0%, 20% {
+        transform: translateY(0);
+    }
+    25%, 45% {
+        transform: translateY(-105px);
+    }
+    50%, 70% {
+        transform: translateY(-210px);
+    }
+    75%, 95% {
+        transform: translateY(-315px);
+    }
+    100% {
+        transform: translateY(-420px);
+    }
+  }*/
+  .card{
+  height: 100px;
+  width: 145px;
+  }
+  .date{
+    width: 100%;
+    font-size: 11px;
+    height: 15px;
+    font-weight: 100;;
+  }
+  .match{
+    width: calc(100% - 2px);
+    font-size: 14px;
+  }
+  .flags img {
+    width: 20px;
+    height: auto;
+    margin: 4px 0;
+  }
+  select#selectevento {
+    width: 100%;
+    font-size: 15px;
+  }  
+  /* END For mobile phones: */
+}
+	</style>
+</head>
+<body onload="caliente();">
+<div class="widget">
+<div class="sponsor"><a href="https://online.caliente.mx/page?member=PublimetroMX&amp;campaign=DEFAULT&amp;channel=DEFAULT&amp;zone=54300998&amp;lp=
+57942232" target="_blank"><img alt="Logo Caliente" height="auto" src="images/logoCaliente.PNG" width="auto" /></a></div>
+<a> <select id="selectevento" onchange="caliente();"><option value="0">Liga MX</option><option value="1">Inglaterra - Premier League</option><option value="2">España - La Liga</option><option value="3">NFL</option><option value="4">NBA</option> </select> </a>
+
+<div class="frame">
+<div class="carousel" id="carousel"></div>
+</div>
+<a> </a></div>
+
+<p><a> <script src="widgetCalienteMX.js"></script></a></p>
+
+<p><a> </a></p>
+</body>
+</html>

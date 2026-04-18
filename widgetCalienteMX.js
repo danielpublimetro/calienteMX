@@ -41,7 +41,7 @@ function caliente() {
 
 function myFunction(xml) {
   var i;
-  var xmlDoc = xml.responseXML;
+  var xmlDoc = xml;
   var table='';
   var x2 = xmlDoc.getElementsByTagName("Ev");
   var x = xmlDoc.getElementsByTagName("SBType");

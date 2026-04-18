@@ -6,31 +6,38 @@ var xhttp = new XMLHttpRequest();
   };
   
 
-function caliente()
-{
-var select_mundial = document.getElementById('selectevento');
+function caliente() {
+  const select = document.getElementById('selectevento');
 
-                if(select_mundial.value == "1" )
-                {
-                               xhttp.open("GET", "data/englandPremierLeague.xml", true);
-                }if(select_mundial.value == "2" )
-                {
-                               xhttp.open("GET", "data/laLigaEspana.xml", true);
-                }if(select_mundial.value == "3" )
-                {
-                               xhttp.open("GET", "data/NFL.xml", true);
-                }if(select_mundial.value == "4" )
-                {
-                               xhttp.open("GET", "data/NBA.xml", true);
-                }
-                if(select_mundial.value == "0" )
-                {
-                               xhttp.open("GET", "data/ligaMX.xml", true);
-                }
+  const map = {
+    "0": "ligaMX",
+    "1": "premier",
+    "2": "laliga",
+    "3": "nfl",
+    "4": "nba"
+  };
 
-xhttp.send();
-console.log(select_mundial.value);
+  fetch("https://script.google.com/macros/s/AKfycbwmhIoZetZfQGG9YYcb4dgnnyHLe4gcfR_d5oBCDtRSmqEkI78lJevLsA_BkHVaOc9L/exec")
+    .then(res => res.json())
+    .then(data => {
+
+      const xmlString = data[map[select.value]];
+
+      if (!xmlString) {
+        console.error("No hay datos para:", map[select.value]);
+        return;
+      }
+
+      const parser = new DOMParser();
+      const xmlDoc = parser.parseFromString(xmlString, "text/xml");
+
+      myFunction(xmlDoc);
+    })
+    .catch(err => {
+      console.error("Error cargando datos:", err);
+    });
 }
+
 
 function myFunction(xml) {
   var i;

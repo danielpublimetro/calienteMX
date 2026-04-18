@@ -7,35 +7,80 @@ var xhttp = new XMLHttpRequest();
   
 
 function caliente() {
+  let cachedData = null;
+
+function caliente(init = false) {
   const select = document.getElementById('selectevento');
 
   const map = {
-    "0": "ligaMX",
-    "1": "premier",
-    "2": "laliga",
-    "3": "nfl",
-    "4": "nba"
+    "0": { key: "ligaMX", label: "Liga MX" },
+    "1": { key: "premier", label: "Inglaterra - Premier League" },
+    "2": { key: "laliga", label: "España - La Liga" },
+    "3": { key: "nfl", label: "NFL" },
+    "4": { key: "nba", label: "NBA" }
   };
+
+  // 🔁 Si ya tenemos datos, no vuelvas a pedirlos
+  if (cachedData) {
+    renderFromData(select, map);
+    return;
+  }
 
   fetch("https://script.google.com/macros/s/AKfycbwmhIoZetZfQGG9YYcb4dgnnyHLe4gcfR_d5oBCDtRSmqEkI78lJevLsA_BkHVaOc9L/exec")
     .then(res => res.json())
     .then(data => {
+      cachedData = data;
 
-      const xmlString = data[map[select.value]];
+      // 🔥 FILTRAR ligas con datos reales
+      let validOptions = [];
 
-      if (!xmlString) {
-        console.error("No hay datos para:", map[select.value]);
+      for (let key in map) {
+        let xmlString = data[map[key].key];
+
+        if (xmlString && xmlString.includes("<Ev")) {
+          validOptions.push({
+            value: key,
+            label: map[key].label
+          });
+        }
+      }
+
+      // ❗ Si no hay ninguna liga válida
+      if (validOptions.length === 0) {
+        document.getElementById("carousel").innerHTML = "No hay eventos disponibles";
+        select.innerHTML = "";
         return;
       }
 
-      const parser = new DOMParser();
-      const xmlDoc = parser.parseFromString(xmlString, "text/xml");
+      // 🔥 Construir dropdown dinámico
+      select.innerHTML = validOptions.map(opt =>
+        `<option value="${opt.value}">${opt.label}</option>`
+      ).join("");
 
-      myFunction(xmlDoc);
+      // 🔥 Seleccionar automáticamente la primera válida
+      select.value = validOptions[0].value;
+
+      renderFromData(select, map);
     })
     .catch(err => {
       console.error("Error cargando datos:", err);
     });
+}
+}
+
+
+function renderFromData(select, map) {
+  const xmlString = cachedData[map[select.value].key];
+
+  if (!xmlString) {
+    document.getElementById("carousel").innerHTML = "Sin datos";
+    return;
+  }
+
+  const parser = new DOMParser();
+  const xmlDoc = parser.parseFromString(xmlString, "text/xml");
+
+  myFunction(xmlDoc);
 }
 
 
